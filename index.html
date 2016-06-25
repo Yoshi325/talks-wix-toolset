@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="generator" content="HTML Tidy for HTML5 for Mac OS X version 5.2.0">
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <meta name="author" content="Charles L. Yost">
+    <title>WiX Toolset</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <style type="text/css">
+    code{white-space: pre;}
+    </style>
+    <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+    margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    </style>
+    <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme"><!-- Printing and PDF exports -->
+
+    <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+<style>   
+.reveal .slides section .fragment.current-visible.current-fragment.collapsable-fragment { display: initial; } 
+.reveal .slides section .fragment.current-visible.collapsable-fragment { display: none; } 
+h1.subtitle { font-size: 2em; } 
+.code { text-align: left; } 
+.reveal dd > p { margin: 0; } 
+figure, img { border:none !important; outline: none !important; } 
+ul { columns: 2; -webkit-columns: 2; -moz-columns: 2; list-style-position: inside; } 
+li { white-space: nowrap; } 
+</style>  
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1 class="title">WiX Toolset</h1>
+                <h1 class="subtitle">The bees knees of MSI authoring</h1>
+                <h2 class="author">Charles L. Yost</h2>
+                <h3 class="date">2016-06</h3>
+            </section>
+            <section id="description" class="slide level1">
+                <h1>Description</h1>
+                <p>A 20 minute crash course on the basics of: Using the WiX Toolset to create your own MSIs. Debugging your MSIs. Creating a UI for your MSIs. Making MSI creation flexible enough for automation.</p>
+            </section>
+            <section id="speaker-bio" class="slide level1">
+                <h1>Speaker Bio</h1>
+                <p>Charles Yost is currently a Security Developer at Binary Defense Systems. He has worked in the IT industry for over 10 years in a wide variety of roles including: Printer Technician, VoIP Systems Administrator, .Net Developer, and Web Developer. Throughout life his number one passion has been learning new skills. He can often be found researching a topic, attempting to keep up with the quickly evolving field of technology. Charles enjoys teaching and talking to others about technology. He is a member of NEOISF, and attends as many InfoSec conferences as he can justify with his wife.</p>
+            </section>
+            <section id="binary-defense-systems" class="slide level1">
+                <h1>Binary Defense Systems</h1>
+                <p>We are an MSSP providing 24/7/365 Monitoring & Detection, Threat Intelligence, SIEM Management, Incident Response and Consulting Services.</p>
+            </section>
+            <section id="contact" class="slide level1">
+                <h1>Contact</h1>
+                <p>Twitter: @CHARLESLYOST</p>
+                <p>GitHub & YouTube: Yoshi325</p>
+                <p>This Talk:<br>
+                <a href="https://github.com/Yoshi325/talks-wix-toolset" class="uri">https://github.com/Yoshi325/talks-wix-toolset</a></p>
+            </section>
+            <section id="showtime" class="slide level1">
+                <h1>Showtime!</h1>
+            </section>
+            <section id="why" class="slide level1">
+                <h1>Why?</h1>
+                <p>Repackage a product that isn't distributed as one.</p>
+                <div class="fragment">
+                    <p>Create a pre-configured or pre-seeded install.</p>
+                </div>
+                <div class="fragment">
+                    <p>Package an exploit or payload disguised as a valid installer.</p>
+                </div>
+            </section>
+            <section id="how" class="slide level1">
+                <h1>How?</h1>
+                <p>WiX Toolset @ <a href="http://wixtoolset.org/" class="uri">http://wixtoolset.org/</a></p>
+            </section>
+            <section id="wix-toolset-1" class="slide level1">
+                <h1>WiX Toolset</h1>
+                <p>What is it?</p>
+            </section>
+            <section class="slide level1">
+                <p>The WiX toolset lets developers create installers for Windows Installer, the Windows installation engine.</p>
+            </section>
+            <section id="tools-in-the-set" class="slide level1">
+                <h1>Tools in the Set</h1>
+            </section>
+            <section id="candle" class="slide level1">
+                <h1>Candle</h1>
+                <p>Preprocesses and compiles WiX source files into object files (.wixobj).</p>
+            </section>
+            <section id="light" class="slide level1">
+                <h1>Light</h1>
+                <p>Links and binds one or more .wixobj files and creates a Windows Installer database (.msi or .msm).</p>
+            </section>
+            <section id="and-many-more" class="slide level1">
+                <h1>And Many More!</h1>
+                <ul>
+                    <li>Lit</li>
+                    <li>Dark</li>
+                    <li>Heat</li>
+                    <li>Insignia</li>
+                    <li>Melt</li>
+                    <li>Torch</li>
+                    <li>Smoke</li>
+                    <li>Pyro</li>
+                    <li>WixCop</li>
+                    <li>WixUnit</li>
+                    <li>Lux & Nit</li>
+                </ul>
+            </section>
+            <section id="how-1" class="slide level1">
+                <h1>How?</h1>
+                <p>It all starts with a wxs file.</p>
+                <div class="fragment">
+                    <p>A wxs file is basically a specially constructed xml file.</p>
+                </div>
+            </section>
+            <section id="the-rules" class="slide level1">
+                <h1>The Rules</h1>
+                <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/">WiX Schema Reference</a></p>
+            </section>
+            <section id="lets-build-one" class="slide level1">
+                <h1>Lets Build One!</h1>
+            </section>
+            <section id="starting-out" class="slide level1">
+                <h1>Starting Out</h1>
+                <p>Xml Declaration</p>
+                <div class="fragment">
+                    <div class="sourceCode">
+                        <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span></code></pre>
+                    </div>
+                </div>
+            </section>
+            <section id="wix-element" class="slide level1">
+                <h1>Wix Element</h1>
+                <p>This is the top-level container element for every wxs file.</p>
+                <div class="fragment">
+                    <div class="sourceCode">
+                        <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+...
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                    </div>
+                    <aside class="notes">
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/wix.html">Wix Element</a></p>
+                    </aside>
+                </div>
+            </section>
+            <section id="product-element" class="slide level1">
+                <h1>Product Element</h1>
+                <p>The Product element is analogous to the main function in a C program.</p>
+                <div class="fragment">
+                    <p>When linking, only one Product section can be given to the linker to produce a successful result.</p>
+                </div>
+                <div class="fragment">
+                    <p>Using this element creates an msi file.</p>
+                </div>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span>
+<span class="ot">    Id=</span><span class="st">'*'</span>
+<span class="ot">    Language=</span><span class="st">'1033'</span>
+<span class="ot">    Manufacturer=</span><span class="st">'Wash N Go'</span>
+<span class="ot">    Name=</span><span class="st">'Window Cleaner'</span>
+<span class="ot">    UpgradeCode=</span><span class="st">'$(var.ProductUpgradeCodeGuid)'</span>
+<span class="ot">    Version=</span><span class="st">'1.0.0.0'</span>
+  <span class="kw">&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/product.html">Product Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="product-attributes" class="slide level1">
+                <h1>Product Attributes</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>The product code GUID for the product.</p>
+                    </dd>
+                    <dt>Language</dt>
+                    <dd>
+                        <p>1033 is English/US</p>
+                    </dd>
+                    <dt>Manufacturer</dt>
+                    <dd>
+                        <p>The manufacturer of the product.</p>
+                    </dd>
+                    <dt>Name</dt>
+                    <dd>
+                        <p>The descriptive name of the product.</p>
+                    </dd>
+                    <dt>UpgradeCode</dt>
+                    <dd>
+                        <p>The upgrade code GUID for the product.</p>
+                    </dd>
+                    <dt>Version</dt>
+                    <dd>
+                        <p>The product's version string.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="product-attr.-tips" class="slide level1">
+                <h1>Product Attr. Tips</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>You can use * to have this auto generated.</p>
+                    </dd>
+                    <dt>UpgradeCode</dt>
+                    <dd>
+                        <p>How you tie different versions together</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="package-element" class="slide level1">
+                <h1>Package Element</h1>
+                <p>Properties about the package,<br>
+                which can be seen on the package in Explorer.</p>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span>
+    <span class="er">[...]</span>
+  <span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span>
+<span class="ot">      Compressed=</span><span class="st">'yes'</span>
+<span class="ot">      Description=</span><span class="st">'For Cleaning Windows'</span>
+<span class="ot">      InstallerVersion=</span><span class="st">'200'</span>
+<span class="ot">      InstallScope=</span><span class="st">'perMachine'</span>
+<span class="ot">      Platform=</span><span class="st">'x86'</span>
+    <span class="kw">/&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/package.html">Package Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="package-attributes" class="slide level1">
+                <h1>Package Attributes</h1>
+                <dl>
+                    <dt>Compressed</dt>
+                    <dd>
+                        <p>Set to 'yes' to have compressed files in the source.</p>
+                    </dd>
+                    <dt>Description</dt>
+                    <dd>
+                        <p>The product full name or description.</p>
+                    </dd>
+                    <dt>InstallerVersion</dt>
+                    <dd>
+                        <p>The minimum version of the Windows Installer required to install this package.</p>
+                    </dd>
+                    <dt>InstallScope</dt>
+                    <dd>
+                        <p>Use this attribute to specify the installation scope of this package: per-machine or per-user.</p>
+                    </dd>
+                    <dt>Platform</dt>
+                    <dd>
+                        <p>The platform supported by the package.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="package-attr.-tips" class="slide level1">
+                <h1>Package Attr. Tips</h1>
+                <dl>
+                    <dt>InstallerVersion</dt>
+                    <dd>
+                        <p>Unless you know you need something else: 200.</p>
+                    </dd>
+                    <dt>Platform</dt>
+                    <dd>
+                        <p>Probably x86, maybe x64.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="directory-element" class="slide level1">
+                <h1>Directory Element</h1>
+                <p>Directory layout for the product.</p>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'ProgramFilesFolder'</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'COMPANYDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WashNGo'</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'INSTALLDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WindowCleaner'</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;/Directory&gt;</span>
+      <span class="kw">&lt;/Directory&gt;</span>
+    <span class="kw">&lt;/Directory&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/directory.html">Directory Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="directory-attributes" class="slide level1">
+                <h1>Directory Attributes</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>This value is the unique identifier of the directory entry.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="directory-attr.-tips" class="slide level1">
+                <h1>Directory Attr. Tips</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>Might be a special one like ProgramFilesFolder.<br>
+                        Might be a generic one like COMPANYDIRECTORY or INSTALLDIRECTORY.</p>
+                    </dd>
+                    <dt>Name</dt>
+                    <dd>
+                        <p>If Id is a generic one, Name sets the name.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="component-element" class="slide level1">
+                <h1>Component Element</h1>
+                <p>Component for parent Directory. Required to group files.</p>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'ProgramFilesFolder'</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'COMPANYDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WashNGo'</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'INSTALLDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WindowCleaner'</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;Component</span>
+<span class="ot">            Id=</span><span class="st">'WINDOWCLEANERCOMPONENT'</span>
+<span class="ot">            Win64=</span><span class="st">'no'</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;/Component&gt;</span>
+        <span class="kw">&lt;/Directory&gt;</span>
+      <span class="kw">&lt;/Directory&gt;</span>
+    <span class="kw">&lt;/Directory&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/component.html">Component Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="component-attributes" class="slide level1">
+                <h1>Component Attributes</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>Component identifier; this is the primary key for identifying components.</p>
+                    </dd>
+                    <dt>Win64</dt>
+                    <dd>
+                        <p>Set this attribute to 'yes' to mark this as a 64-bit component.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="file-element" class="slide level1">
+                <h1>File Element</h1>
+                <p>How to add files to your installer.</p>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'ProgramFilesFolder'</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'COMPANYDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WashNGo'</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;Directory</span><span class="ot"> Id=</span><span class="st">'INSTALLDIRECTORY'</span><span class="ot"> Name=</span><span class="st">'WindowCleaner'</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;Component</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;File</span>
+<span class="ot">              Name=</span><span class="st">'window-cleaner.exe'</span>
+<span class="ot">              Source=</span><span class="st">'from\window-cleaner.exe'</span>
+          <span class="kw">/&gt;</span>
+          <span class="kw">&lt;/Component&gt;</span>
+        <span class="kw">&lt;/Directory&gt;</span>
+      <span class="kw">&lt;/Directory&gt;</span>
+    <span class="kw">&lt;/Directory&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/file.html">File Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="file-attributes" class="slide level1">
+                <h1>File Attributes</h1>
+                <dl>
+                    <dt>Name</dt>
+                    <dd>
+                        <p>What the file will be installed as.</p>
+                    </dd>
+                    <dt>Source</dt>
+                    <dd>
+                        <p>Where to get the file when packaging.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="feature-componentref-elements" class="slide level1">
+                <h1>Feature & ComponentRef Elements</h1>
+                <dl>
+                    <dt>Feature</dt>
+                    <dd>
+                        <p>Minimum to install something.</p>
+                    </dd>
+                    <dt>ComponentRef</dt>
+                    <dd>
+                        <p>Create a reference to a Component element for install.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Directory</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Feature</span><span class="ot"> Id=</span><span class="st">'Complete'</span><span class="ot"> Level=</span><span class="st">'1'</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;ComponentRef</span><span class="ot"> Id=</span><span class="st">'WINDOWCLEANERCOMPONENT'</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/Feature&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/feature.html">Feature Element</a> <a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/componentref.html">ComponentRef Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="media-element" class="slide level1">
+                <h1>Media Element</h1>
+                <p>Media element describes a disk that makes up the source media for the installation.</p>
+            </section>
+            <section class="slide level1">
+                <div class="sourceCode">
+                    <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version="1.0"<span class="kw">?&gt;</span>
+<span class="kw">&lt;Wix</span><span class="ot"> xmlns=</span><span class="st">"http://schemas.microsoft.com/wix/2006/wi"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;Product</span> <span class="er">[...]</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;Package</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Directory</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Feature</span> <span class="er">[...]</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;Media</span>
+<span class="ot">      Id=</span><span class="st">'1'</span>
+<span class="ot">      Cabinet=</span><span class="st">'DiskOne.cab'</span>
+<span class="ot">      EmbedCab=</span><span class="st">'yes'</span>
+    <span class="kw">/&gt;</span>
+  <span class="kw">&lt;/Product&gt;</span>
+<span class="kw">&lt;/Wix&gt;</span></code></pre>
+                </div>
+                <aside class="notes">
+                    <blockquote>
+                        <p><a href="http://wixtoolset.org/documentation/manual/v3/xsd/wix/media.html">Media Element</a></p>
+                    </blockquote>
+                </aside>
+            </section>
+            <section id="media-attributes" class="slide level1">
+                <h1>Media Attributes</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>Disk identifier.</p>
+                    </dd>
+                    <dt>Cabinet</dt>
+                    <dd>
+                        <p>Cabnet file for the compressed files.</p>
+                    </dd>
+                    <dt>EmbedCab</dt>
+                    <dd>
+                        <p>Instructs the binder to embed the cabinet in the product if 'yes'.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="media-attr.-tips" class="slide level1">
+                <h1>Media Attr. Tips</h1>
+                <dl>
+                    <dt>Id</dt>
+                    <dd>
+                        <p>This number must be equal to or greater than 1.</p>
+                    </dd>
+                </dl>
+            </section>
+            <section id="now-to-compile" class="slide level1">
+                <h1>Now to Compile</h1>
+                <p>Run candle against the wxs file:</p>
+                <pre class="sourceCode shell"><code>candle.exe window-cleaner.wxs</code></pre>
+                <div class="fragment">
+                    <p>This will output errors, or a wixobj file.</p>
+                </div>
+            </section>
+            <section id="next-to-link-bind" class="slide level1">
+                <h1>Next to Link & Bind</h1>
+                <p>Run light against the wixobj file:</p>
+                <pre class="sourceCode shell"><code>light.exe -out window-cleaner-1.0.msi window-cleaner.wixobj</code></pre>
+                <div class="fragment">
+                    <p>This will output errors, or a msi file.</p>
+                </div>
+            </section>
+            <section id="what-about-ui" class="slide level1">
+                <h1>What about UI?</h1>
+                <p>WiX Toolset isn't just tools. It comes with some useful dialog sets.</p>
+                <ul>
+                    <li>WixUI_Advanced</li>
+                    <li>WixUI_FeatureTree</li>
+                    <li>WixUI_InstallDir</li>
+                    <li>WixUI_Minimal</li>
+                    <li>WixUI_Mondo</li>
+                </ul>
+                <aside class="notes">
+                    <p><a href="http://wixtoolset.org/documentation/manual/v3/wixui/wixui_dialog_library.html">Using Built-in WixUI Dialog Sets</a></p>
+                </aside>
+            </section>
+            <section id="debugging-tips" class="slide level1">
+                <h1>Debugging Tips</h1>
+                <p>Enable Windows Installer logging:</p>
+                <pre class="sourceCode shell"><code>HKLM:\\Software\\Policies\\Microsoft\\Windows\\Installer</code></pre>
+                <aside class="notes">
+                    <p><a href="https://support.microsoft.com/en-us/kb/223300">How to enable Windows Installer logging</a></p>
+                </aside>
+            </section>
+            <section id="debugging-tips-1" class="slide level1">
+                <h1>Debugging Tips</h1>
+                <p>Call the MSI with the logging flags:</p>
+                <pre class="sourceCode shell"><code>msiexec /i window-cleaner-1.0.msi /l*v window-cleaner.log</code></pre>
+                <aside class="notes">
+                    <p><a href="http://wixtoolset.org/documentation/manual/v3/howtos/general/get_a_log.html">How To: Get a Log of Your Installation for Debugging</a></p>
+                </aside>
+            </section>
+            <section id="debugging-tips-2" class="slide level1">
+                <h1>Debugging Tips</h1>
+                <p>Under the covers:</p>
+                <p>Orca from the Windows SDK</p>
+                <aside class="notes">
+                    <p><a href="http://wixtoolset.org/documentation/manual/v3/howtos/general/look_inside_msi.html">How To: Look Inside Your MSI With Orca</a></p>
+                </aside>
+            </section>
+            <section id="the-end" class="slide level1">
+                <h1>The End</h1>
+                <p>Enjoy the rest of BSidesCLE 2016!!</p>
+            </section>
+        </div>
+    </div>
+    <script src="reveal.js/lib/js/head.min.js">
+    </script> 
+    <script src="reveal.js/js/reveal.js">
+    </script> 
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Vertical centering of slides
+        center: false,
+        // Transition style
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+</body>
+</html>
